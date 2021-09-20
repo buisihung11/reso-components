@@ -4,6 +4,12 @@
 
 [![NPM](https://img.shields.io/npm/v/reso-components.svg)](https://www.npmjs.com/package/reso-components) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+## Roadmap
+
+- [ ] Basic form control InputText, InputNumber, Select, Radio, Checkbox,
+- [ ] Basic form type with `onSubmit`
+- [ ] Support `responsive` props
+
 ## Install
 
 ```bash
