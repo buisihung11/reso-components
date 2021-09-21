@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
-import ResoForm, { ResoColumnType } from 'reso-components'
+import ResoForm, { ResoColumnType, ResoFormRef } from 'reso-components'
 import 'reso-components/dist/index.css'
 
 const COLUMNS: ResoColumnType[] = [
@@ -104,9 +104,12 @@ const COLUMNS: ResoColumnType[] = [
 ]
 
 const App = () => {
+  const ref = useRef<ResoFormRef>(null)
+
   return (
     <div style={{ padding: '2rem', margin: '0 auto' }}>
       <ResoForm
+        ref={ref}
         formProps={{
           defaultValues: {
             state: 1
@@ -115,6 +118,16 @@ const App = () => {
         columns={COLUMNS}
         onFinish={(values) => new Promise((res) => res(console.log(values)))}
       />
+      <button
+        onClick={() => {
+          console.log('CUSTOM SUBMIT BUTTON')
+          if (ref.current?.form) {
+            ref.current?.form.handleSubmit(console.log)()
+          }
+        }}
+      >
+        Test submit
+      </button>
     </div>
   )
 }

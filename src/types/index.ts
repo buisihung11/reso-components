@@ -9,6 +9,7 @@ import {
   ControllerFieldState,
   ControllerProps,
   ControllerRenderProps,
+  UseFormReturn,
   UseFormStateReturn
 } from 'react-hook-form'
 
@@ -55,4 +56,8 @@ export type InputProps = Omit<ControllerProps, 'render'> & {
     label: string | ReactNode
     [key: string]: any
   }[]
+}
+
+export type ResoFormRef = {
+  form: UseFormReturn
 }
