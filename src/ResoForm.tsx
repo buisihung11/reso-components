@@ -24,58 +24,61 @@ const ResoForm = ({ formProps, columns, onFinish, size }: FormProps) => {
   const form = useForm(formProps)
 
   const renderContent = (columns: ResoColumnType[]): ReactNode[] => {
-    const grid: ReactNode[] = []
-    const gridItems: ReactNode[] = []
-
-    columns.forEach((col, index) => {
-      console.log(`col ${index + 1}`, col)
-      if (col.valueType !== 'group') {
-        if (col.name) {
-          const itemProps: {
-            valueType: ValueType
-            formProps: InputProps
-          } = {
-            valueType: col.valueType as ValueType,
-            formProps: {
-              name: col.name,
-              control: form.control,
-              fieldProps: {
-                ...col.fieldProps,
-                label: col.title,
-                fullWidth: true,
-                size: size || 'small'
-              },
-              options: col.valueEnum
-            }
-          }
-
-          const item = col.renderFormItem ? (
-            <Controller
-              control={form.control}
-              render={col.renderFormItem}
-              name={col.name}
-            />
-          ) : (
-            <Grid item xs={col.width}>
-              {buildFormItem(itemProps)}
+    return columns.map((col) => {
+      if (col.valueType === 'group') {
+        if (!col.columns) return null
+        return (
+          <Box>
+            <Grid container spacing={2}>
+              {renderContent(col.columns)}
             </Grid>
-          )
-          gridItems.push(item)
-        }
-      } else {
-        if (col.columns) {
-          grid.push(...renderContent(col.columns))
+          </Box>
+        )
+      }
+
+      if (!col.name) return null
+      const itemProps: {
+        valueType: ValueType
+        formProps: InputProps
+      } = {
+        valueType: col.valueType as ValueType,
+        formProps: {
+          name: col.name,
+          control: form.control,
+          fieldProps: {
+            ...col.fieldProps,
+            label: col.title,
+            fullWidth: true,
+            size: size || 'small'
+          },
+          options: col.valueEnum
         }
       }
-    })
-    grid.push(
-      <Box>
-        <Grid container spacing={2} alignItems='start'>
-          {gridItems}
+
+      const item = col.renderFormItem ? (
+        <Grid item xs={col.width}>
+          <Controller
+            control={form.control}
+            render={col.renderFormItem}
+            name={col.name}
+          />
         </Grid>
-      </Box>
-    )
-    return grid
+      ) : (
+        <Grid item xs={col.width}>
+          {buildFormItem(itemProps)}
+        </Grid>
+      )
+
+      return item
+    })
+    // grid.push(
+    //   <Box>
+    //     <Grid container spacing={2} alignItems='start'>
+    //       {gridItems}
+    //     </Grid>
+    //   </Box>
+    // )
+    // return grid
   }
 
   return (
