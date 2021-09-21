@@ -22,9 +22,10 @@ export type ValueType =
   | 'dateRange'
   | 'time'
   | 'group'
+  | 'divider'
 
 export type ResoColumnType = {
-  title: string
+  title?: string
   name?: string
   valueType?: ValueType
   width?: boolean | GridSize | undefined
@@ -35,6 +36,7 @@ export type ResoColumnType = {
   }[]
   columns?: ResoColumnType[]
   fieldProps?: TextFieldProps | SelectProps
+  hideInForm?: boolean
   renderFormItem?: ({
     field,
     fieldState,

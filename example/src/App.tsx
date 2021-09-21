@@ -19,6 +19,7 @@ const COLUMNS: ResoColumnType[] = [
     title: 'Custom input',
     name: 'custom-input',
     width: 4,
+    hideInForm: true,
     renderFormItem: ({ field }) => (
       <input
         type='week'
@@ -35,7 +36,10 @@ const COLUMNS: ResoColumnType[] = [
     width: 12
   },
   {
-    title: 'Title 3',
+    valueType: 'divider'
+  },
+  {
+    title: 'Group 3',
     name: 'createName',
     valueType: 'group',
     columns: [
@@ -64,7 +68,7 @@ const COLUMNS: ResoColumnType[] = [
     ]
   },
   {
-    title: 'Title 4',
+    title: 'Group 4',
     valueType: 'group',
     columns: [
       {
@@ -77,6 +81,23 @@ const COLUMNS: ResoColumnType[] = [
         title: 'Title 4-2',
         width: 4,
         name: 'groupTitle'
+      },
+      {
+        // title: 'Nested group 4-1',
+        width: 6,
+        valueType: 'group',
+        columns: [
+          {
+            title: 'Title 4-1',
+            name: 'firstName',
+            width: 6
+          },
+          {
+            title: 'Title 4-2',
+            width: 6,
+            name: 'lastName'
+          }
+        ]
       }
     ]
   }
@@ -86,6 +107,11 @@ const App = () => {
   return (
     <div style={{ padding: '2rem', margin: '0 auto' }}>
       <ResoForm
+        formProps={{
+          defaultValues: {
+            state: 1
+          }
+        }}
         columns={COLUMNS}
         onFinish={(values) => new Promise((res) => res(console.log(values)))}
       />
